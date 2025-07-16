@@ -1,4 +1,5 @@
 from __future__ import annotations
+from collections import OrderedDict
 
 class Option():
     """Records a preference to a specific senario
@@ -9,6 +10,31 @@ class Option():
     """    
     question: str
     rating: str
+
+    def __init__(self, question: str = None, rating: str = None) -> None:
+        self.question, self.rating = '', ''
+        if question:
+            self.question = question
+        if rating: 
+            self.rating = rating
+
+    def set_question(self, quest: str) -> None:
+        """
+        Set the question for this Option instance.
+        """
+        self.question = quest
+
+    def set_rating(self, rate: str) -> None:
+        """
+        Set the rating for this Option instance.
+
+        precondition: rating is either 'G', 'Y', 'O', 'R"
+        """
+        self.rating = rate
+
+    def __repr__(self):
+        return f"{self.question}: {self.rating}"
+    
 
 class Location():
     """
@@ -28,55 +54,56 @@ class Location():
         len(self.date2) ==
         len(self.date3) ==
         3
+        for the drv3 students
     """
-    date1: set[Option]
-    date2: set[Option]
-    date3: set[Option]
+    dates: list[set[Option]]
 
     def __init__(self):
-        self.date1, self.date2, self.date3 = {}, {}, {}
+        # initialize the three dates
+        self.dates = [set(), set(), set()]
+
+    def __repr__(self) -> str:
+        rep = f'\n{type(self).__name__}: '
+
+        for i in range(len(self.dates)):
+            rep += (f'\nDate {i}: ' + 
+                    f'{list(self.dates[i])}')
+            
+        return rep
+
 
 class AV(Location):
     """
     AV | Extend superclass Location
     """
-    date1: set[Option]
-    date2: set[Option]
-    date3: set[Option]
+    dates: list[set[Option]]
 
 class Dining(Location):
     """
     Dining | Extend superclass Location
     """
-    date1: set[Option]
-    date2: set[Option]
-    date3: set[Option]
+    dates: list[set[Option]]
 
 class Library(Location):
     """
     Library | Extend superclass Location
     """
-    date1: set[Option]
-    date2: set[Option]
-    date3: set[Option]
-
-class Courtyard(Location):
-    """
-    Court | Extend superclass Location
-    """
-    date1: set[Option]
-    date2: set[Option]
-    date3: set[Option]
+    dates: list[set[Option]]
 
 class Gym(Location):
     """
     Gym | Extend superclass Location
     """
-    date1: set[Option]
-    date2: set[Option]
-    date3: set[Option]
+    dates: list[set[Option]]
 
-class Person():
+class Courtyard(Location):
+    """
+    Court | Extend superclass Location
+    """
+    dates: list[set[Option]]
+
+
+class Person(): 
     """
     A person in DRv3's LATU. 
 
@@ -88,7 +115,7 @@ class Person():
         len(self.prefs) <= 5
     """
     name: str
-    prefs: list[Location]
+    prefs: OrderedDict[str, Location]
 
     def __init__(self, name: str):
         self.name = name
