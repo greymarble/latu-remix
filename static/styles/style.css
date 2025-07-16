@@ -1,0 +1,47 @@
+* {
+    margin: 0;
+    position: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(23, 23, 72);
+}
+
+.header {
+    background-color: rgb(102, 145, 182);
+    font-size: 3vw;
+
+    position: relative;
+
+    width: 100%;
+    height: 25vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.begin {
+    background-color: rgb(120, 94, 53);
+    border-radius: 0 0 4vh 4vh;
+    position: relative;
+
+    width: 100%;
+    height: 10vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    font-size: x-large;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color:rgb(212, 204, 199);
+    
+    width: 25vw;
+    height: 6vh;
+}
