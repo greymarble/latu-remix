@@ -36,14 +36,69 @@ def create_student_obj(student: str) -> Person:
         
         return person
     
-def create_all_students() -> set[Person]:
+def create_all_students() -> list[Person]:
     """
+    Returns a list of all students as Person objects, containing 
+    their preferences.
     """
-    ...
+    all_students = ['angie', 'gonta', 'himiko', 'k1-b0', 
+                    'kaede', 'kaito', 'kirumi', 'kokichi', 
+                    'korekiyo', 'maki', 'miu', 'rantaro', 
+                    'ryoma', 'tenko', 'tsumugi']
+    
+    all_student_obj = []
+    
+    for student in all_students:
+        all_student_obj.append(create_student_obj(student))
+
+    return all_student_obj
+
+def compare(one: Person, another: Person) -> int:
+    """Return an integer that represents the compatibility score between 
+    Person objects 'one' and 'another'.
+
+    a returned value of <describe thresholds>
+    """
+    common_questions = get_common_questions(one, another)
+    score = 0
+
+def get_answers(student: Person, questions: list[str]) -> list[str]:
+    """Return the list of student <student>'s ordered answers to the 
+    given questions <questions>.
+    """
+    
+    
+
+
+def get_common_questions(one: Person, another: Person) -> list[str]:
+    one_maps, another_maps = get_mappings(one), get_mappings(another)
+    common = {}
+
+    for item in one_maps.items():
+        if item[0] in another_maps:
+            common.update({item[0]: [item[1], another_maps[item[0]]]})
+
+    return common
+
+    
+def get_mappings(student: Person) -> dict[str, str]:
+    """
+    Get the list of valid questions:preference mappings
+    that student <student> has commented on.
+    """
+    mappings = {}
+
+    for location in student.prefs:
+        for date in location.dates:
+            for option in date:
+                mappings.update(option.to_dict())
+
+    return mappings
+
 
 
 def main():
-    create_student_obj('kaito')
+    create_all_students()
 
 if __name__ == '__main__':
     main()

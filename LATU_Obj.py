@@ -32,6 +32,9 @@ class Option():
         """
         self.rating = rate
 
+    def to_dict(self) -> dict[str, str]:
+        return {self.question: self.rating}
+        
     def __repr__(self):
         return f"{self.question}: {self.rating}"
     
@@ -45,63 +48,29 @@ class Location():
     Do Not Instantiate!
 
     attributes: 
-    - date1: set[Option]
-    - date1: set[Option]
-    - date1: set[Option]
+    - name: the name of the location
+    - dates: contains the preference mapping for each date.
 
     Representation Invariants:
-    --- len(self.date1) ==
-        len(self.date2) ==
-        len(self.date3) ==
-        3
-        for the drv3 students
+    --- len(self.dates) == 3
     """
+    name: str
     dates: list[set[Option]]
 
-    def __init__(self):
+    def __init__(self, name: str):
         # initialize the three dates
+        self.name = name
         self.dates = [set(), set(), set()]
+        
 
     def __repr__(self) -> str:
-        rep = f'\n{type(self).__name__}: '
+        rep = f'\n{self.name}: '
 
         for i in range(len(self.dates)):
             rep += (f'\nDate {i}: ' + 
                     f'{list(self.dates[i])}')
             
         return rep
-
-
-class AV(Location):
-    """
-    AV | Extend superclass Location
-    """
-    dates: list[set[Option]]
-
-class Dining(Location):
-    """
-    Dining | Extend superclass Location
-    """
-    dates: list[set[Option]]
-
-class Library(Location):
-    """
-    Library | Extend superclass Location
-    """
-    dates: list[set[Option]]
-
-class Gym(Location):
-    """
-    Gym | Extend superclass Location
-    """
-    dates: list[set[Option]]
-
-class Courtyard(Location):
-    """
-    Court | Extend superclass Location
-    """
-    dates: list[set[Option]]
-
 
 class Person(): 
     """
@@ -115,11 +84,11 @@ class Person():
         len(self.prefs) <= 5
     """
     name: str
-    prefs: OrderedDict[str, Location]
+    prefs: list[Location]
 
     def __init__(self, name: str):
         self.name = name
-        self.prefs = [AV(), Dining(), Library(), Gym(), Courtyard()]
+        self.prefs = [Location('AV'), Location('Dining'), Location('Library'), Location('Gym'), Location('Courtyard')]
 
-    def compare(self, other: Person):
-        ...
+    def __repr__(self) -> str:
+        return f'\n\n{self.name} | \n{self.prefs}'
