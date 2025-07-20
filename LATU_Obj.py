@@ -7,7 +7,7 @@ class Option():
     attributes:
         -- question: str
         -- rating: str
-    """    
+    """
     question: str
     rating: str
 
@@ -49,7 +49,8 @@ class Location():
 
     attributes: 
     - name: the name of the location
-    - dates: contains the preference mapping for each date.
+    - dates: contains the preference 
+      mapping for each date.
 
     Representation Invariants:
     --- len(self.dates) == 3
@@ -78,7 +79,8 @@ class Person():
 
     attributes:
         name: the person's name
-        prefs: a collection of preferences to given situations
+        prefs: a collection of preferences 
+        to given situations
 
     RI:
         len(self.prefs) <= 5

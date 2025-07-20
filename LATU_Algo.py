@@ -61,7 +61,7 @@ def compare(one: Person, another: Person) -> tuple[int, int, int]:
     """Return an integer that represents the compatibility score between 
     Person objects 'one' and 'another'.
 
-    Returns the confidence, the score, and the scaled score.
+    Returns the confidence, and the score.
 
     a returned value of <describe thresholds>
 
@@ -77,85 +77,77 @@ def compare(one: Person, another: Person) -> tuple[int, int, int]:
     for map in common_questions.items():
         ans_set = map[1]
         if len(ans_set) == 1:
-
-            el = list(ans_set)[0]
-            if el == 'G' or el == 'R':
-                score += 2
-            # must be 'Y' or 'O'
-            else:
-                score += 1.5
+            score += 2
+             
         #len(ans_set) == 2
         elif ('Y' in ans_set and 'G' in ans_set) or ('O' in ans_set and 'R' in ans_set):
-            score += 1.75
-        elif ('O' in ans_set and 'G' in ans_set) or ('Y' in ans_set and 'R' in ans_set):
-            score += 0.25
+            score += 1.5
         elif 'Y' in ans_set and 'O' in ans_set:
             score += 0.5
+        elif ('O' in ans_set and 'G' in ans_set) or ('Y' in ans_set and 'R' in ans_set):
+            score += 0.25
         #GR
         else:
             pass
 
     # print(f'confidence: {len(common_questions)/45}')
     # print(f'score: {score}')
-    return confidence, score, score * confidence
+    return confidence, score
 
-def rank_all(students: list[Person]):
+def rank_all(students: list[Person], focus: Person | str = None) -> list[tuple[tuple[Person, Person], tuple[int, int]]]:
     """
-    Compare all the students and rank them by 
+    Compare all the students and rank them by score or confidence.
+
+    FULL NAME 
     """
-    rankBy = print('Rank by score \'S\' or confidence \'C\'? ')
+    rankBy = input('Rank by score \'S\' or confidence \'C\'? ')
+
     while not rankBy == 'S' and not rankBy == 'C':
         print('please try again')
-        rankBy = print('Rank by score \'S\' or confidence \'C\'? ')
+        rankBy = input('Rank by score \'S\' or confidence \'C\'? ')
 
-def compare_all(students: list[Person]):
-    
-    ...
-    
+    all_compare = compare_all(students)
+
+    if focus:
+        if isinstance(focus, Person):
+            focus = focus.name
+        
+        all_compare = [elem for elem in all_compare if focus in elem[0]]
 
 
-def compare_debug(one: Person, another: Person) -> int:
-    """Return an integer that represents the compatibility score between 
-    Person objects 'one' and 'another'.
+    if rankBy == 'S':
+        #sort by score
+        print('****** RANKING BY SCORE ******')
+        all_compare.sort(key = lambda e: e[1][1], reverse=True)
 
-    a returned value of <describe thresholds>
+        return all_compare
+    else:
+        print('****** RANKING BY CONFIDENCE ******')
+        all_compare.sort(key = lambda e: e[1][0], reverse=True)
 
+        return all_compare
+
+def compare_all(students: list[Person]) -> list[tuple[tuple[Person, Person], tuple[int, int]]]:
     """
-    common_questions = get_common_questions(one, another)
-    score = 0
+    """
+    all = []
 
-    for map in common_questions.items():
-        print(f'{map[0]} |', end='')
+    i = 0
+    for _ in range(len(students) - 1):
+        currList = students[i:]
 
-        ans_set = map[1]
-        if len(ans_set) == 1:
+        for index in range(len(currList) - 1):
+            # prefix = "\n\n" + f"{currList[0].name} and {currList[index + 1].name} | "
 
-            el = list(ans_set)[0]
-            if el == 'G' or el == 'R':
-                print(f'two {el}s. score += 2')
-                score += 2
-            # must be 'Y' or 'O'
-            else:
-                print(f'two {el}s. score += 1.5')
-                score += 1.5
-        #len(ans_set) == 2
-        elif ('Y' in ans_set and 'G' in ans_set) or ('O' in ans_set and 'R' in ans_set):
-            print(f'A: {list(ans_set)[0]}, B: {list(ans_set)[1]}. generally pos. score += 1.75')
-            score += 1.75
-        elif 'Y' in ans_set and 'O' in ans_set:
-            print(f'A: {list(ans_set)[0]}, B: {list(ans_set)[1]}. slight conflict. score += 0.5')
-            score += 0.5
-        elif ('O' in ans_set and 'G' in ans_set) or ('Y' in ans_set and 'R' in ans_set):
-            print(f'A: {list(ans_set)[0]}, B: {list(ans_set)[1]}. generally conflicting. score += 0.25')
-            score += 0.25
-        #GR
-        else:
-            print(f'A: {list(ans_set)[0]}, B: {list(ans_set)[1]}. SKULL.... score += 0')
-            pass
+            people = (currList[0].name, currList[index + 1].name)
+            comparison = compare(currList[0], currList[index + 1])
 
-    return score
-        
-        
+            all.append( (people, comparison) )
+
+        i += 1
+
+    return all
+
 
 def get_common_questions(one: Person, another: Person) -> dict[str]:
     one_maps, another_maps = get_mappings(one), get_mappings(another)
@@ -185,7 +177,7 @@ def get_mappings(student: Person) -> dict[str, str]:
 
 
 def main():
-    create_all_students()
+    compare_all(create_all_students())
 
 if __name__ == '__main__':
     main()
