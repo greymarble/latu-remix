@@ -1,5 +1,8 @@
 from LATU_Obj import *
-from LATU_Const import *
+
+"""
+    CREATING STUDENT + USER OBJECTS FOR COMPARISON
+"""
 
 def create_student_obj(student: str) -> Person:
     """
@@ -53,9 +56,10 @@ def create_all_students() -> list[Person]:
 
     return all_student_obj
 
-def InsufficientDataError(Exception):
-    def __str__(self) -> str:
-        return '\'compare\' was called on people with no questions in commmon! What am I supposed to analyze!?'
+
+"""
+    COMPARISON FUNCTIONS
+"""
 
 def compare(one: Person, another: Person) -> tuple[int, int, int]:
     """Return an integer that represents the compatibility score between 
@@ -68,7 +72,7 @@ def compare(one: Person, another: Person) -> tuple[int, int, int]:
     """
     common_questions = get_common_questions(one, another)
     score = 0
-    #45 is the max number of options a given *student* can comment on.
+    #45 is the max number of options a given *student* can comme-nt on.
     # they should have ONE question in common, right..?
     confidence = len(common_questions)/45
     if common_questions == 0:
@@ -148,6 +152,9 @@ def compare_all(students: list[Person]) -> list[tuple[tuple[Person, Person], tup
 
     return all
 
+"""
+    HELPER FUNCTIONS FOR COMPARISON
+"""
 
 def get_common_questions(one: Person, another: Person) -> dict[str]:
     one_maps, another_maps = get_mappings(one), get_mappings(another)
@@ -158,8 +165,7 @@ def get_common_questions(one: Person, another: Person) -> dict[str]:
             common.update({item[0]: {item[1], another_maps[item[0]]}})
 
     return common
-
-    
+ 
 def get_mappings(student: Person) -> dict[str, str]:
     """
     Get the list of valid questions:preference mappings
@@ -174,10 +180,123 @@ def get_mappings(student: Person) -> dict[str, str]:
 
     return mappings
 
+def InsufficientDataError(Exception):
+    def __str__(self) -> str:
+        return '\'compare\' was called on people with no questions in commmon! What am I supposed to analyze!?'
+
+"""
+create user
+"""
+
+def get_questions(student: Person) -> set[str]:
+    questions = set()
+
+    for location in student.prefs:
+        for date in location.dates:
+            for option in date:
+                questions.add(option.question)
+
+    return questions
+                
+
+def get_all_student_questions(students: list[Person]) -> list[str]:
+    av, din,lib, gym, court = set(), set(), set(), set(), set()
+
+    for student in students:
+        for location in student.prefs:
+            for i in range(len(location.dates)):
+                for option in location.dates[i]:
+
+                    if location.name == 'AV':
+                        av.add(f'{location.name},{i+1},{option.question}\n')
+                    elif location.name == 'Dining':
+                        din.add(f'{location.name},{i+1},{option.question}\n')
+                    elif location.name == 'Library':
+                        lib.add(f'{location.name},{i+1},{option.question}\n')
+                    elif location.name == 'Gym':
+                        gym.add(f'{location.name},{i+1},{option.question}\n')
+                    else:
+                        court.add(f'{location.name},{i+1},{option.question}\n')
+    
+    all_q = []
+    for loc in [av, din, lib, gym, court]:
+        all_q.extend(_format_gasq(loc))
+
+    return all_q
+
+def _format_gasq(location: set) -> list[str]:
+    l = list(location)
+    l.sort()
+
+    return l
+
+
+def createUserQCSV(name: str):
+    with open(f'studentData/{name}pref.csv', 'w') as f:
+        f.writelines(get_all_student_questions(create_all_students()))
+
+
+def createNewUser(name: str) -> Person:
+    with open(f'studentData/{name}pref.csv', 'r') as file:
+        User = Person(name)
+
+        currLine = file.readline().strip()
+        prevLocation = ''
+        prevDate = ''
+
+        locIndex = 0
+        dateIndex = 0
+
+        while currLine:
+            loc, date, quest = currLine.split(',', maxsplit=2)
+            
+            if not prevLocation:
+                prevLocation = loc
+                prevDate = date
+            else:
+                if prevLocation != loc:
+                    locIndex += 1
+                    prevLocation = loc
+                if prevDate != date:
+                    dateIndex = (dateIndex + 1) % 3
+                    prevDate = date
+
+
+            answer = input(f'At {loc}, on date {date}: {quest} ')
+            while answer not in {'G', 'Y', 'O', 'R'}:
+                answer = input(f'try again. \n At {loc}, on date {date}: {quest} ')
+
+
+            User.prefs[locIndex].dates[dateIndex].add(Option(quest, answer))
+
+            currLine = file.readline().strip()
+
+
+    _overwriteUserCSV(User)
+
+    return User
+
+def _overwriteUserCSV(user: Person) -> None:
+    lines = []
+
+    for loc in user.prefs:
+        for i in range(len(loc.dates)):
+            for date in loc.dates:
+                for option in date:
+                    lines.append(f'{loc.name},{i+1},{option.question},{option.rating}\n')
+            
+                
+    with open(f'studentData/{user.name}pref.csv', 'w') as file: 
+        file.writelines(lines)
+
+def readUserCSV(name: str) -> Person:
+    with open(f'studentData/{name}pref.csv', 'r') as file:
+        user = Person(name)
+        line = file.readline().strip().split(',', maxsplit=2)
+
 
 
 def main():
-    compare_all(create_all_students())
 
 if __name__ == '__main__':
     main()
