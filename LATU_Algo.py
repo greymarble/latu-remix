@@ -186,37 +186,27 @@ def InsufficientDataError(Exception):
 
 """
 create user
-"""
-
-def get_questions(student: Person) -> set[str]:
-    questions = set()
-
-    for location in student.prefs:
-        for date in location.dates:
-            for option in date:
-                questions.add(option.question)
-
-    return questions
-                
+"""             
 
 def get_all_student_questions(students: list[Person]) -> list[str]:
-    av, din,lib, gym, court = set(), set(), set(), set(), set()
+    av, din, lib, gym, court = set(), set(), set(), set(), set()
 
     for student in students:
         for location in student.prefs:
             for i in range(len(location.dates)):
                 for option in location.dates[i]:
 
+                    # ...
                     if location.name == 'AV':
-                        av.add(f'{location.name},{i+1},{option.question}\n')
+                        av.add(f'{option.question},{location.name},{i+1}')
                     elif location.name == 'Dining':
-                        din.add(f'{location.name},{i+1},{option.question}\n')
+                        din.add(f'{option.question},{location.name},{i+1}')
                     elif location.name == 'Library':
-                        lib.add(f'{location.name},{i+1},{option.question}\n')
+                        lib.add(f'{option.question},{location.name},{i+1}')
                     elif location.name == 'Gym':
-                        gym.add(f'{location.name},{i+1},{option.question}\n')
+                        gym.add(f'{option.question},{location.name},{i+1}')
                     else:
-                        court.add(f'{location.name},{i+1},{option.question}\n')
+                        court.add(f'{option.question},{location.name},{i+1}')
     
     all_q = []
     for loc in [av, din, lib, gym, court]:
@@ -226,17 +216,36 @@ def get_all_student_questions(students: list[Person]) -> list[str]:
 
 def _format_gasq(location: set) -> list[str]:
     l = list(location)
-    l.sort()
+    l.sort(key=lambda elm: elm[-1])
 
     return l
 
+def get_user_answers(questions: list[str]) -> list[str]:
+    """
+    Get the user's answers to the list of questions <questions>.
+    """
+    user_ans = []
 
-def createUserQCSV(name: str):
+    for i in range(len(questions)):
+        q, loc, dateNum = questions[i].rsplit(',', maxsplit=2)
+
+        ans = input(f'at the {loc}, on date {dateNum}: {q}: ').capitalize()
+
+        while ans not in {'G', 'Y', 'R', 'O'}:
+            ans = input(f'please try again. \nat the {loc}, on date {dateNum}: {q}: ').capitalize()
+
+        user_ans.append(questions[i] + f',{ans}\n')
+
+    return user_ans
+
+
+def createUser(name: str) -> None:
+    """Handles all 
+    """
     with open(f'studentData/{name}pref.csv', 'w') as f:
-        f.writelines(get_all_student_questions(create_all_students()))
+        f.writelines(get_user_answers(get_all_student_questions(create_all_students())))
 
-
-def createNewUser(name: str) -> Person:
+def readUserCSV(name: str) -> Person:
     with open(f'studentData/{name}pref.csv', 'r') as file:
         User = Person(name)
 
@@ -248,7 +257,7 @@ def createNewUser(name: str) -> Person:
         dateIndex = 0
 
         while currLine:
-            loc, date, quest = currLine.split(',', maxsplit=2)
+            q, loc, date, ans = currLine.rsplit(',', maxsplit=3)
             
             if not prevLocation:
                 prevLocation = loc
@@ -261,42 +270,14 @@ def createNewUser(name: str) -> Person:
                     dateIndex = (dateIndex + 1) % 3
                     prevDate = date
 
-
-            answer = input(f'At {loc}, on date {date}: {quest} ')
-            while answer not in {'G', 'Y', 'O', 'R'}:
-                answer = input(f'try again. \n At {loc}, on date {date}: {quest} ')
-
-
-            User.prefs[locIndex].dates[dateIndex].add(Option(quest, answer))
+            User.prefs[locIndex].dates[dateIndex].add(Option(q, ans))
 
             currLine = file.readline().strip()
 
-
-    _overwriteUserCSV(User)
-
     return User
 
-def _overwriteUserCSV(user: Person) -> None:
-    lines = []
-
-    for loc in user.prefs:
-        for i in range(len(loc.dates)):
-            for date in loc.dates:
-                for option in date:
-                    lines.append(f'{loc.name},{i+1},{option.question},{option.rating}\n')
-            
-                
-    with open(f'studentData/{user.name}pref.csv', 'w') as file: 
-        file.writelines(lines)
-
-def readUserCSV(name: str) -> Person:
-    with open(f'studentData/{name}pref.csv', 'r') as file:
-        user = Person(name)
-        line = file.readline().strip().split(',', maxsplit=2)
-
-
-
 def main():
+    ...
 
 if __name__ == '__main__':
     main()

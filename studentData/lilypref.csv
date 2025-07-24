@@ -1,0 +1,132 @@
+Watch a documentary on mediums,AV,1,O
+Watch a documentary on the police,AV,1,R
+Watch a documentary on adventurers,AV,1,O
+Watch a documentary on magic tricks,AV,1,Y
+Watch a documentary on inventors,AV,1,G
+Watch a documentary on bugs,AV,1,O
+Watch a documentary on human trafficking,AV,1,R
+Watch a documentary on robot manufacturing,AV,1,G
+Watch a documentary about anime,AV,1,G
+Watch a documentary on assassins,AV,1,O
+Watch a documentary on athletes,AV,1,O
+Watch a documentary on idols,AV,1,Y
+Watch a documentary on aliens,AV,1,Y
+Watch a documentary on martial arts,AV,1,G
+Watch a documentary on cosplayers,AV,1,G
+Watch a documentary on detectives,AV,1,O
+Watch a documentary on tennis players,AV,1,O
+Watch a documentary on novelists,AV,1,O
+Watch a documentary on pianists,AV,1,Y
+Watch a documentary on criminal organizations,AV,1,O
+Watch a comedy movie,AV,2,Y
+Watch a musical movie,AV,2,Y
+"We should focus on reality, not movies",AV,2,R
+Watch an action movie,AV,2,O
+Watch a horror movie,AV,2,R
+Let's try to find a dirty movie,AV,2,O
+Let's go to the bathroom,AV,2,O
+Watch a science fiction movie,AV,2,Y
+Watch a drama movie,AV,2,R
+Watch an anime movie,AV,2,G
+The video rack is bothering me...,AV,3,R
+Play dominoes with the movie boxes,AV,3,O
+"We should focus on reality, not movies",AV,3,R
+Let's drink some soda,AV,3,R
+Let's have a sword fight with rolled-up posters,AV,3,Y
+I might fall asleep...,AV,3,O
+Let's shoot a video of us,AV,3,G
+It's hard to decide what to watch,AV,3,Y
+Let's go through the trash,Dining,1,Y
+Let's eat candy,Dining,1,O
+Let's bake something,Dining,1,G
+Let's drink something,Dining,1,Y
+Let's cook something,Dining,1,Y
+Let's wash the dishes,Dining,1,O
+Let's try fasting,Dining,2,R
+Let's go in the freezer,Dining,2,O
+Let's just be lazy...,Dining,2,O
+Let's have some tea,Dining,2,G
+Sleeping after a meal,Dining,3,O
+Getting horny after a meal,Dining,3,O
+Drinking green tea after a meal,Dining,3,O
+Drinking coffee after a meal,Dining,3,G
+Exercising after a meal,Dining,3,R
+Napping after a meal,Dining,3,O
+Let's read manga,Library,1,G
+This is boring...,Library,1,O
+Let's read a dirty book,Library,1,Y
+Let's make a tower of books,Library,2,Y
+Sure is dusty in here,Library,2,O
+I want to scream really loud!,Library,2,Y
+Let's study,Library,2,Y
+I'm getting sleepy...,Library,2,O
+Let's read a picture book,Library,2,Y
+Let's read high literature,Library,3,O
+Let's read a grimoire,Library,3,O
+Let's look at a photo collection of islands,Library,3,Y
+Let's look at an insect field guide,Library,3,O
+Let's write a book,Library,3,G
+Let's look through photographs of the planets,Library,3,G
+Let's look at a photobook of unexplored places,Library,3,Y
+Let's look at the world map,Library,3,O
+Let's read a book about maids,Library,3,O
+Let's read a book on conspiracy theories,Library,3,O
+I want to scream really loud!,Library,3,Y
+Let's look through photographs of landscapes,Library,3,Y
+Let's read a book of gravure prints,Library,3,Y
+Let's make a tower of books,Library,3,Y
+Let's read a book on the mafia,Library,3,O
+Let's read a spy novel,Library,3,O
+Let's look at a photo album of uniforms,Library,3,O
+This is an interesting globe...,Library,3,O
+Let's read a novel,Library,3,O
+Let's look at a photo book of pianos,Library,3,Y
+Let's clean up a little,Library,3,O
+Let's read the bible,Library,3,R
+Let's read a book about robots,Library,3,Y
+Let's read a book about patent laws,Library,3,O
+Let's read a book on martial arts,Library,3,G
+Let's get our bodies moving,Gym,1,G
+Wanna try forming a choir?,Gym,1,Y
+Wanna try being in a play?,Gym,1,Y
+Wanna try meditating?,Gym,1,Y
+Let's do some muscle training,Gym,1,Y
+Let's renovate the place,Gym,1,O
+Let's clean up a little,Gym,1,O
+I'm tired...,Gym,1,O
+Let's do some image training,Gym,2,O
+We should stretch,Gym,2,G
+Let's do some muscle training,Gym,2,Y
+"Ah, maybe we should take off our clothes?",Gym,2,O
+Let's warm up a bit,Gym,2,Y
+Let's play basketball,Gym,2,Y
+Let's play tag,Gym,3,G
+Let's do some muscle training,Gym,3,Y
+You want to spar with me?,Gym,3,O
+Let's play dodgeball,Gym,3,G
+I'll just watch you...,Gym,3,O
+Let's train... our minds...,Gym,3,G
+I'll be the referee,Gym,3,Y
+Let's burn this place to the ground,Gym,3,O
+What a great view...,Courtyard,1,G
+Let's assassinate someone,Courtyard,1,O
+Let's go for a run,Courtyard,1,Y
+Let's relax in the sun,Courtyard,1,G
+Let's go back inside,Courtyard,1,O
+Let's do some muscle training,Courtyard,1,Y
+Let's get some fresh air,Courtyard,1,G
+Let's box,Courtyard,1,O
+Let's go for a walk,Courtyard,2,Y
+What a great view...,Courtyard,2,G
+Let's look for bugs,Courtyard,2,O
+Let's go back inside,Courtyard,2,O
+Let's dance!,Courtyard,2,Y
+Let's relax in the sun,Courtyard,2,G
+Let's run a marathon,Courtyard,3,R
+Let's play word chain,Courtyard,3,Y
+Let's play catch,Courtyard,3,Y
+Staying here forever wouldn't be so bad,Courtyard,3,G
+I've gotten used to being here...,Courtyard,3,Y
+Let's go for a walk,Courtyard,3,G
+I want to get outside as soon as I can...,Courtyard,3,R
+Let's blow bubbles,Courtyard,3,Y
